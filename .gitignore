@@ -108,3 +108,4 @@ spark-warehouse/
 
 # Project specific
 data/
+*.parquet/
