@@ -11,10 +11,10 @@ import scala.util.Try
 case class Config(datasetDirOrFile: String = "", sessionDuration: Long = -1)
 
 // Hits Dataset case class (for reading data log files)
-case class HitsDataset(timestamp: Timestamp, userid: String, event: String, amount: Double)
+case class HitsDataset(timestamp: String, userid: String, event: String, amount: Double)
 
 // Sessions Dataset case class
-case class SessionsDataset(userid: String, start: Timestamp, end: Timestamp,
+case class SessionsDataset(userid: String, start: String, end: String,
                            renders: Int, plays: Int, checkouts: Int, amount: Double)
 
 // Enumeration for events ids
@@ -81,14 +81,14 @@ object SessionizationJob {
 
     val hitsDataset: Dataset[HitsDataset] = rawDataset.filter(_.trim.split("\t").length == 4)
       .map(s => s.split("\t")).map(r =>
-      HitsDataset(Timestamp.valueOf(r(0)), r(1), r(2), Try(r(3).toDouble).getOrElse(0.0)))
+      HitsDataset(r(0), r(1), r(2), Try(r(3).toDouble).getOrElse(0.0)))
 
     // Window functions
     val window = Window.partitionBy('userid).orderBy('timestamp)
     val tsDiff = lag('epoch, 1).over(window)
     val sessionSum = sum('newSession).over(window)
 
-    def toEpoch: Timestamp => Long = _.getTime / 60000L
+    def toEpoch: String => Long = Timestamp.valueOf(_).getTime / 60000L
 
     val sessionizedDataFrame: DataFrame = hitsDataset.withColumn("epoch", udf(toEpoch).apply('timestamp))
       .withColumn("diff", 'epoch - tsDiff).withColumn("newsession", ('diff > sessionDuration).cast("integer"))
