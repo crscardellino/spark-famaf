@@ -17,17 +17,11 @@ case class HitsDataset(timestamp: String, userid: String, event: String, amount:
 case class SessionsDataset(userid: String, start: String, end: String,
                            renders: Int, plays: Int, checkouts: Int, amount: Double)
 
-// Enumeration for events ids
-object Event extends Enumeration {
-  val Render, Play, Checkout = Value
-}
-
-
 object SessionizationJob {
   val eventsIds = Map(
-    Event.Render -> "12c6fc06c99a462375eeb3f43dfd832b08ca9e17",
-    Event.Play -> "bd307a3ec329e10a2cff8fb87480823da114f8f4",
-    Event.Checkout -> "7b52009b64fd0a2a49e6d8a939753077792b0554"
+    "R" -> "12c6fc06c99a462375eeb3f43dfd832b08ca9e17",
+    "P" -> "bd307a3ec329e10a2cff8fb87480823da114f8f4",
+    "C" -> "7b52009b64fd0a2a49e6d8a939753077792b0554"
   )
 
   def main(args: Array[String]) {
@@ -96,9 +90,9 @@ object SessionizationJob {
 
     val sessionsDataset: Dataset[SessionsDataset] = sessionizedDataFrame.groupBy('userid, 'sessionid)
       .agg(first('timestamp).as("start"), last('timestamp).as("end"),
-        sum(when('event === eventsIds(Event.Render), 1).otherwise(0)).cast("integer").as("renders"),
-        sum(when('event === eventsIds(Event.Play), 1).otherwise(0)).cast("integer").as("plays"),
-        sum(when('event === eventsIds(Event.Checkout), 1).otherwise(0)).cast("integer").as("checkouts"),
+        sum(when('event === eventsIds("R"), 1).otherwise(0)).cast("integer").as("renders"),
+        sum(when('event === eventsIds("P"), 1).otherwise(0)).cast("integer").as("plays"),
+        sum(when('event === eventsIds("C"), 1).otherwise(0)).cast("integer").as("checkouts"),
         sum('amount).as("amount")).drop('sessionid).as[SessionsDataset]
 
     // Save the hits dataset
