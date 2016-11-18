@@ -51,21 +51,21 @@ class HcdnSpider(scrapy.Spider):
                     party=party.strip()
                 ))
 
-            dcomissions = div.css('#proyectosTramite')\
+            dcommissions = div.css('#proyectosTramite')\
                 .xpath('.//table[preceding-sibling::div//text()=" Giro a comisiones en Diputados "]')
 
-            if len(dcomissions) > 0:
-                dcomissions = dcomissions[0].xpath('.//td/text()').extract()
+            if len(dcommissions) > 0:
+                dcommissions = dcommissions[0].xpath('.//td/text()').extract()
             else:
-                dcomissions = []
+                dcommissions = []
 
-            scomissions = div.css('#proyectosTramite') \
+            scommissions = div.css('#proyectosTramite') \
                 .xpath('.//table[preceding-sibling::div//text()=" Giro a comisiones en Senado "]')
 
-            if len(scomissions) > 0:
-                scomissions = scomissions[0].xpath('.//td/text()').extract()
+            if len(scommissions) > 0:
+                scommissions = scommissions[0].xpath('.//td/text()').extract()
             else:
-                scomissions = []
+                scommissions = []
 
             results = []
 
@@ -86,7 +86,7 @@ class HcdnSpider(scrapy.Spider):
                 date=date,
                 law_text=law_text,
                 signers=signers,
-                dcomissions=dcomissions,
-                scomissions=scomissions,
+                dcommissions=dcommissions,
+                scommissions=scommissions,
                 results=results
             )
