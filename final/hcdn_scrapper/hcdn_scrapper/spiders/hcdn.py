@@ -73,11 +73,11 @@ class HcdnSpider(scrapy.Spider):
                     .xpath('.//tr[td]'):
                 row = row.xpath('.//td/text()').extract()
                 if len(row) == 4:
-                    chamber, _, date, result = row
+                    chamber, _, rdate, result = row
                     results.append(dict(
                         chamber=chamber,
                         result=result,
-                        date=datetime.strptime(date.strip(), "%d/%m/%Y").strftime("%Y-%m-%d")
+                        date=datetime.strptime(rdate.strip(), "%d/%m/%Y").strftime("%Y-%m-%d")
                     ))
 
             yield dict(
