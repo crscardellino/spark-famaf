@@ -1,4 +1,4 @@
-name := "HCDNPreprocessing"
+name := "HCDN"
 
 version := "1.0"
 
@@ -11,4 +11,7 @@ libraryDependencies ++= Seq(
 )
 
 assemblyJarName in assembly := "HCDNPreprocessing.jar"
+
+run in Compile <<= Defaults.runTask(fullClasspath in Compile, mainClass in (Compile, run), runner in (Compile, run))
+runMain in Compile <<= Defaults.runMainTask(fullClasspath in Compile, runner in (Compile, run))
 
