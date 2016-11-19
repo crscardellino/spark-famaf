@@ -19,7 +19,7 @@ object HCDNJsonPreprocessor {
       ).validate { input =>
         val datasetFile: File = new File(input)
         if (datasetFile.exists()) success
-        else failure("The provided dataset path must be a valid file or directory")
+        else failure("The provided dataset path must be a valid json file")
       }.text("Path to the dataset json file")
 
       opt[String]('o', "output").required().action((output, config) =>
