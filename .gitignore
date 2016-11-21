@@ -109,3 +109,6 @@ spark-warehouse/
 # Project specific
 data/
 *.parquet/
+*.out
+*.err
+logs/
