@@ -61,8 +61,8 @@ object HCDNPostProcessor {
 
     val vectorToArray: UserDefinedFunction = udf { vector: Vector => vector.toArray }
 
-    def loadDatasets(topicsList: Seq[Int], optimizer: String, baseDir: String): Map[Int, (DataFrame, DataFrame)] = {
-      def loadDatasetsRec(remainingTopics: Seq[Int], currentDatasets: Map[Int, (DataFrame, DataFrame)]):
+    def loadDatasets(topicsList: List[Int], optimizer: String, baseDir: String): Map[Int, (DataFrame, DataFrame)] = {
+      def loadDatasetsRec(remainingTopics: List[Int], currentDatasets: Map[Int, (DataFrame, DataFrame)]):
       Map[Int, (DataFrame, DataFrame)] = {
         remainingTopics match {
           case topic :: rTopics =>
@@ -80,8 +80,8 @@ object HCDNPostProcessor {
     }
 
     val LDADatasets: Map[String, Map[Int, (DataFrame, DataFrame)]] = Map(
-      "em" -> loadDatasets(params.topics, "em", inputDirPath),
-      "online" -> loadDatasets(params.topics, "online", inputDirPath)
+      "em" -> loadDatasets(params.topics.toList, "em", inputDirPath),
+      "online" -> loadDatasets(params.topics.toList, "online", inputDirPath)
     )
 
     for { (optimizer, datasets) <- LDADatasets
