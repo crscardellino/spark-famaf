@@ -7,7 +7,7 @@ import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions._
 
 
-class HCDNPostProcessor {
+object HCDNPostProcessor {
   private case class Params(
       input: String = "",
       output: String = "",
@@ -54,7 +54,7 @@ class HCDNPostProcessor {
     val spark = SparkSession
       .builder()
       .master("local")
-      .appName("HCDN Topic Modelling App")
+      .appName("HCDN Post Processor App")
       .getOrCreate()
 
     import spark.implicits._
