@@ -1,0 +1,102 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+\geometry{
+  left=2.5cm,
+  right=2.5cm,
+  top=3.5cm,
+  bottom=3cm
+}
+
+\usepackage{setspace}
+\doublespacing
+
+\usepackage{hyperref}
+
+\title{
+  \large{Programación Distribuída sobre Grandes Volúmenes de Datos}\\
+  \Large{Análisis de Proyectos de Ley de la Honorable Cámara de Diputados de la Nación Argentina}
+}
+
+\author{Biedma, Luis A.\\         \texttt{lbiedma@famaf.unc.edu.ar}
+        \and
+        Cardellino, Cristian A.\\ \texttt{ccardellino@famaf.unc.edu.ar}}
+
+\date{Miércoles, 21 de Diciembre del 2016}
+
+\begin{document}
+  \maketitle
+
+  \section{Introducción}\label{section:introduction}
+
+  El presente informe presenta el trabajo de análisis realizado sobre los
+  proyectos de ley propuestos por la Honorable Cámara de Diputados de la Nación
+  Argentina\footnote{\url{http://www.hcdn.gob.ar/}} (HCDN), entre la primera
+  sesión ordinaria del 1 Marzo del 2011 y el 8 de Octubre de 2016.
+
+  El objetivo de este trabajo es poder realizar un estudio, si bien ligeramente
+  superficial, sobre el tipo de proyectos que se presentan en la HCDN, cuáles
+  son los que terminan por sancionarse, y que partidos, distritos y
+  legisladores suelen estar involucrados en los mismos.
+
+  La motivación surge a partir de una serie de publicaciones de un usuario de
+  reddit Argentina\footnote{\url{http://www.reddit.com/r/argentina}}, donde se
+  hace un resumen semana a semana de las actividades de la totalidad del
+  Congreso de la Nación Argentina.  Se resolvió hacer el trabajo solo sobre la
+  HCDN y no sobre la totalidad del congreso por cuestiones prácticas, debido a
+  que sólo el HCDN tiene una estructura en su sitio web suficientemente
+  uniforme como para poder conseguir datos los cuales analizar.
+
+  El proyecto se divide, a grandes rasgos, en 4 etapas principales: obtención
+  de datos; análisis estadístico de los proyectos; modelado de los temas ({\em
+  topic modelling}) de los textos de los proyectos de ley y subsecuente
+  análisis estadístico de esta información; y entrenamiento de un clasificador
+  para predecir si un proyecto será eventualmente sancionado.
+
+  Este informe se estructura de la siguiente manera: la
+  Sección~\ref{section:data} presenta una descripción de los datos obtenidos,
+  el lugar del cuál se obtuvieron y la manera de obtenerlos, también explica
+  las decisiones que se tomaron a la hora de seleccionar los datos. La
+  Sección~\ref{section:statistics} presenta el análisis estadístico general
+  sobre los proyectos (sin tener en cuenta necesariamente su contenido). La
+  Sección~\ref{section:lda} explica el proceso de modelado de temas mediante la
+  técnica de Latent Dirichlet Allocation, los distintos experimentos que se
+  realizaron y un análisis estadístico entre los proyectos y los temas
+  obtenidos.
+  %%%% TODO: Ver si llegamos
+  La Sección~\ref{section:classification} describe el proceso seguido para
+  conseguir un clasificador de proyectos para predecir si estos serán o no
+  sancionados.
+  %%%%
+  Finalmente, en la Sección\ref{section:conclusions} se enumeran las
+  conclusiones del trabajo y se elistan aquellas cosas que quedan para posible
+  trabajo futuro.
+
+  \section{Obtención de datos}\label{section:data}
+
+  Los datos obtenidos son mediante el sitio web oficial de la Honorable Cámara
+  de Diputados de la Nación.  Los proyectos del sitio se pueden obtener
+  mediante la dirección
+  \url{http://www.hcdn.gob.ar/proyectos/proyectoTP.jsp?exp=EXPEDIENTE}, donde
+  {\tt EXPEDIENTE} es el identificador del proyecto y se compone de tres partes
+  separadas por un {\em guión} (-): el primero es un número de al menos 4
+  cifras (que se rellena con ceros en caso de ser menor que 1000), que
+  representa la identificación del proyecto en un período legislativo; le sigue
+  una sigla que representa la cámara o entidad que presentó el proyecto: D para
+  {\em diputados}, S para {\em senado}, PE para {\em Poder Ejecutivo} y JGM
+  para {\em Jefatura Gabinete Ministros}.
+  
+  que va de Marzo a Noviembre, con posibilidad de sesiones extraordinarias en
+  Diciembre, Enero y Febrero)
+
+  \section{Conclusiones}\label{section:conclusions}
+
+  % \bibliographystyle{apalike}
+  % \bibliography{/Users/crscardellino/Documents/Posgrado/Bibliography/bibliography.bib}
+
+\end{document}
