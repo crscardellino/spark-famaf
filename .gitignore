@@ -112,3 +112,7 @@ data/
 *.out
 *.err
 logs/
+
+# Data files
+*.parquet
+*.csv
