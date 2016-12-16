@@ -143,17 +143,17 @@ object HCDNTopicAnalysis {
     saveTopTopics(LDATransformations, LDATopics, spark, s"$outputDirPath/topTopics.csv")
 
     // Topic with the most sanctioned projects
-    val sanctionedProjects: DataFrame = results.filter($"results" === "SANCIONADO").select($"id")
+    val sanctionedProjects: DataFrame = results.filter($"result" === "SANCIONADO").select($"id")
     saveTopTopics(LDATransformations.join(sanctionedProjects, "id"),
       LDATopics, spark, s"$outputDirPath/topSanctionedTopics.csv")
 
     // Topic with the most projects with half sanctions
-    val halfSanctionedProjects: DataFrame = results.filter($"results" === "MEDIA SANCION").select($"id")
+    val halfSanctionedProjects: DataFrame = results.filter($"result" === "MEDIA SANCION").select($"id")
     saveTopTopics(LDATransformations.join(halfSanctionedProjects, "id"),
       LDATopics, spark, s"$outputDirPath/topHalfSanctionedTopics.csv")
 
     // Topic with the most retired projects
-    val retiredProjects: DataFrame = results.filter($"results" === "RETIRADO").select($"id")
+    val retiredProjects: DataFrame = results.filter($"result" === "RETIRADO").select($"id")
     saveTopTopics(LDATransformations.join(retiredProjects, "id"),
       LDATopics, spark, s"$outputDirPath/topRetiredTopics.csv")
 
