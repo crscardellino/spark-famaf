@@ -2,7 +2,8 @@
 
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
-
+\usepackage{pgfplotstable,filecontents}
+\pgfplotsset{compat=1.9}% supress warning
 \usepackage{geometry}
 \usepackage{layout}
 
@@ -41,16 +42,16 @@
 
   El objetivo de este trabajo es poder realizar un estudio, si bien ligeramente
   superficial, sobre el tipo de proyectos que se presentan en la HCDN, cuáles
-  son los que terminan por sancionarse, y que partidos, distritos y
+  son los que terminan por sancionarse, y qué partidos, distritos y
   legisladores suelen estar involucrados en los mismos.
 
-  La motivación surge a partir de una serie de publicaciones de un usuario de
+  La motivación surge a partir de una serie de publicaciones de una usuaria de
   reddit Argentina\footnote{\url{http://www.reddit.com/r/argentina}}, donde se
   hace un resumen semana a semana de las actividades de la totalidad del
-  Congreso de la Nación Argentina.  Se resolvió hacer el trabajo solo sobre la
+  Congreso de la Nación Argentina.  Se resolvió hacer el trabajo sólo sobre la
   HCDN y no sobre la totalidad del congreso por cuestiones prácticas, debido a
   que sólo el HCDN tiene una estructura en su sitio web suficientemente
-  uniforme como para poder conseguir datos los cuales analizar.
+  uniforme como para poder conseguir los datos a analizar.
 
   El proyecto se divide, a grandes rasgos, en 4 etapas principales: obtención
   de datos; análisis estadístico de los proyectos; modelado de los temas ({\em
@@ -74,12 +75,12 @@
   sancionados.
   %%%%
   Finalmente, en la Sección\ref{section:conclusions} se enumeran las
-  conclusiones del trabajo y se elistan aquellas cosas que quedan para posible
+  conclusiones del trabajo y se enlistan aquellas cosas que quedan para posible
   trabajo futuro.
 
   \section{Obtención de datos}\label{section:data}
 
-  Los datos obtenidos son mediante el sitio web oficial de la Honorable Cámara
+  Los datos fueron obtenidos mediante el sitio web oficial de la Honorable Cámara
   de Diputados de la Nación.  Los proyectos del sitio se pueden obtener
   mediante la dirección
   \url{http://www.hcdn.gob.ar/proyectos/proyectoTP.jsp?exp=EXPEDIENTE}, donde
@@ -94,8 +95,34 @@
   que va de Marzo a Noviembre, con posibilidad de sesiones extraordinarias en
   Diciembre, Enero y Febrero)
 
-  \section{Conclusiones}\label{section:conclusions}
+  \section{Estadísticas}\label{section:statistics}
+  
+  Se obtuvieron estadísticas generales y descriptivas sobre temas de diversa índole en un notebook de Zeppelin, pero el mayor enfoque de este informe se encuentra en las próximas subsecciones:
+  
+  
+  \subsection{Proyectos Presentados por Diputado}
+  A continuación, se presentan las estadísticas obtenidas a partir de los proyectos presentados por diputados, con un Top 10 de los diputados con mayor cantidad de proyectos presentados, sancionados y con media sanción, junto con estadísticas descriptivas sobre todos los diputados.
+  
+  
+  \subsection{Proyectos Presentados por Partido}
+  
+  \subsection{Proyectos Presentados por Distrito}
+  
+  \subsection{Proyectos Presentados por Comisión de Diputados}
+  
+  \subsection{Proyectos Presentados por Comisión de Senadores}
+  
+  \subsection{Conclusiones}
+    A partir de lo visualizado en esta sección, se puede concluir lo siguiente:
+    
+    \begin{itemize}
+    	\item El Top 10 de proyectos sancionados por diputado está completamente gobernado por el Frente Para la Victoria, lo cual puede ser consistente con la composición de la camara de diputados para el período del cual se obtuvieron los datos.
+    	
+    \end{itemize}
+  
 
+  \section{Conclusiones Generales}\label{section:conclusions}
+  
   % \bibliographystyle{apalike}
   % \bibliography{/Users/crscardellino/Documents/Posgrado/Bibliography/bibliography.bib}
 
