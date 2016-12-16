@@ -99,7 +99,7 @@ object HCDNTopicAnalysis {
 
     val topTopicsForTopParties: DataFrame = LDATransformations.join(dataset, "id")
       .select($"id", groupColumn, $"pos".as("topic"), $"topicDistribution")
-        .filter(row => topInColumn contains row.getAs[String](groupColumn.toString))
+        .filter(row => topInColumn contains row.getAs[String](groupColumnName))
         .where($"topicDistribution" >= minimumDistribution)
         .dropDuplicates("id", "topic")
       .groupBy(groupColumn, $"topic")
