@@ -36,7 +36,7 @@ object HCDNTopicAnalysis {
       }.text("Path to the input topics file")
 
       opt[String]('l', "inputtransformed").required().action((inputTransformed, params) =>
-        params.copy(inputLDATopics = inputTransformed)
+        params.copy(inputLDATransformed = inputTransformed)
       ).validate { input =>
         val inputFile: File = new File(input)
         if (inputFile.exists()) success
