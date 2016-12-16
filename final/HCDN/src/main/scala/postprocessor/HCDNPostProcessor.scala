@@ -15,16 +15,16 @@ object HCDNPostProcessor {
   )
 
   def main(args: Array[String]): Unit = {
-    val parser = new scopt.OptionParser[Params]("preprocessor") {
-      head("preprocessor", "1.0")
+    val parser = new scopt.OptionParser[Params]("postprocessor") {
+      head("postprocessor", "1.0")
 
       opt[String]('i', "input").required().action((input, params) =>
         params.copy(input = input)
       ).validate { input =>
         val datasetFile: File = new File(input)
         if (datasetFile.exists()) success
-        else failure("The provided dataset path must be the valid laws.parquet file")
-      }.text("Path to the dataset laws.parquet file")
+        else failure("The provided dataset path must be a valid directory")
+      }.text("Path to the input directory")
 
       opt[String]('o', "output").required().action((output, params) =>
         params.copy(output = output)
