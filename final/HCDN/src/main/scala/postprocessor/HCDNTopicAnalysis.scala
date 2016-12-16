@@ -81,11 +81,13 @@ object HCDNTopicAnalysis {
       .coalesce(1).write.format("csv").save(savePath)
   }
 
-  private def saveTopTopicsForTopColumn(dataset: DataFrame, groupColumn: Column,
+  private def saveTopTopicsForTopColumn(dataset: DataFrame, groupColumnName: String,
                                         LDATopics: DataFrame, LDATransformations: DataFrame,
                                         spark: SparkSession, minimumDistribution: Double,
                                         savePath: String): Unit = {
     import spark.implicits._
+
+    val groupColumn: Column = col(groupColumnName)
 
     val topInColumn: Set[String] = dataset
       .groupBy(groupColumn)
@@ -109,7 +111,7 @@ object HCDNTopicAnalysis {
 
     LDATopics.join(topTopicsForTopParties, LDATopics("topic") === topTopicsForTopParties("maxTopic"))
       .map(row => (
-        row.getAs[String](groupColumn.toString),
+        row.getAs[String](groupColumnName),
         row.getAs[Int]("topic"),
         row.getAs[Double]("topicDistributionAvgMax"),
         row.getAs[Seq[String]]("terms").mkString(" ")
@@ -158,23 +160,23 @@ object HCDNTopicAnalysis {
       LDATopics, spark, s"$outputDirPath/topRetiredTopics.csv")
 
     // Top topic in the top 10 parties
-    saveTopTopicsForTopColumn(signers, $"party", LDATopics, LDATransformations, spark, params.minimumDistribution,
+    saveTopTopicsForTopColumn(signers, "party", LDATopics, LDATransformations, spark, params.minimumDistribution,
       s"$outputDirPath/topTopicsForTopParties.csv")
 
     // Top topic in the top 10 districts
-    saveTopTopicsForTopColumn(signers, $"district", LDATopics, LDATransformations, spark, params.minimumDistribution,
+    saveTopTopicsForTopColumn(signers, "district", LDATopics, LDATransformations, spark, params.minimumDistribution,
       s"$outputDirPath/topTopicsForTopDistricts.csv")
 
     // Top topic in the top 10 congressmen
-    saveTopTopicsForTopColumn(signers, $"congressman", LDATopics, LDATransformations, spark, params.minimumDistribution,
+    saveTopTopicsForTopColumn(signers, "congressman", LDATopics, LDATransformations, spark, params.minimumDistribution,
       s"$outputDirPath/topTopicsForTopCongressmen.csv")
 
     // Top topic in the top 10 deputy commissions
-    saveTopTopicsForTopColumn(deputyCommissions, $"commission", LDATopics, LDATransformations, spark,
+    saveTopTopicsForTopColumn(deputyCommissions, "commission", LDATopics, LDATransformations, spark,
       params.minimumDistribution, s"$outputDirPath/topTopicsForTopDeputyCommissions.csv")
 
     // Top topic in the top 10 senate commissions
-    saveTopTopicsForTopColumn(senateCommissions, $"commission", LDATopics, LDATransformations, spark,
+    saveTopTopicsForTopColumn(senateCommissions, "commission", LDATopics, LDATransformations, spark,
       params.minimumDistribution, s"$outputDirPath/topTopicsForTopSenateCommissions.csv")
   }
 }
