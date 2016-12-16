@@ -116,3 +116,4 @@ logs/
 # Data files
 *.parquet
 *.csv
+final/analytics/tables
