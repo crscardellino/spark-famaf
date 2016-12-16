@@ -20,7 +20,7 @@ object HCDNTopicAnalysis {
       head("topicanalysis", "1.0")
 
       opt[String]('i', "input").required().action((inputTopics, params) =>
-        params.copy(inputLDATopics = inputTopics)
+        params.copy(inputDatasets = inputTopics)
       ).validate { input =>
         val inputDatasetDir: File = new File(input)
         if (inputDatasetDir.exists() && inputDatasetDir.isDirectory) success
