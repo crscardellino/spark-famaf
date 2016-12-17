@@ -117,3 +117,5 @@ logs/
 *.parquet
 *.csv
 final/analytics/tables
+
+.ipynb_checkpoints/

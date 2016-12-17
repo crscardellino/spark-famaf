@@ -73,7 +73,7 @@ object HCDNTopicModelling {
     import spark.implicits._
 
     val lawsDataset: DataFrame = spark.read.parquet(datasetFilePath)
-      .withColumn("text", concat($"summary", $"law_text"))
+      .withColumn("text", concat($"summary", lit(" "), $"law_text"))
 
     val tokenizer: RegexTokenizer = new RegexTokenizer()
       .setInputCol("text")
