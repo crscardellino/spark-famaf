@@ -93,13 +93,13 @@ object HCDNClassification {
     val partyFeatureVector = getColumnFeatures(signers, "party", "partyFeatureVector")
     val districtFeatureVector = getColumnFeatures(signers, "district", "districtFeatureVector")
     val congressmanFeatureVector = getColumnFeatures(signers, "congressman", "congressmanFeatureVector")
-    val deputyCommissionFeatureVector = getColumnFeatures(deputyCommissions, "commission",
+    val deputyCommissionsFeatureVector = getColumnFeatures(deputyCommissions, "commission",
       "deputyCommissionsFeatureVector")
 
     val extendedSenateCommissions = laws
       .join(senateCommissions, laws("id") === senateCommissions("id"), "left_outer")
       .drop(senateCommissions("id")).na.fill(Map("commission" -> ""))
-    val senateCommissionFeatureVector = getColumnFeatures(extendedSenateCommissions, "commission",
+    val senateCommissionsFeatureVector = getColumnFeatures(extendedSenateCommissions, "commission",
       "senateCommissionsFeatureVector")
 
     val lawsExtended = laws
@@ -110,8 +110,8 @@ object HCDNClassification {
       .join(partyFeatureVector, "id")
       .join(districtFeatureVector, "id")
       .join(congressmanFeatureVector, "id")
-      .join(deputyCommissionFeatureVector.withColumnRenamed("commissionCount", "deputyCommissionCount"), "id")
-      .join(senateCommissionFeatureVector.withColumnRenamed("commissionCount", "senateCommissionCount"), "id")
+      .join(deputyCommissionsFeatureVector.withColumnRenamed("commissionCount", "deputyCommissionsCount"), "id")
+      .join(senateCommissionsFeatureVector.withColumnRenamed("commissionCount", "senateCommissionsCount"), "id")
 
     val tokenizer = new RegexTokenizer()
       .setInputCol("text")
@@ -137,8 +137,8 @@ object HCDNClassification {
       "partyCount", "partyFeatureVector",
       "districtCount", "districtFeatureVector",
       "congressmanCount", "congressmanFeatureVector",
-      "deputyCommissionCount", "deputyCommissionFeatureVector",
-      "senateCommissionCount", "senateCommissionFeatureVector",
+      "deputyCommissionsCount", "deputyCommissionsFeatureVector",
+      "senateCommissionsCount", "senateCommissionsFeatureVector",
       "tfIdf"
     )
 
