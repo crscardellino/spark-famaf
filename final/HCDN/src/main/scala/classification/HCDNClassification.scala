@@ -106,7 +106,7 @@ object HCDNClassification {
       .join(results, laws("id") === results("id"), "left_outer")
       .select(laws("id"), laws("date"),
         concat($"summary", lit(" "), $"law_text").as("text"),
-        when($"result" === "SANCIONADO", 1).otherwise(0).as("sanctioned"))
+        when($"result" === "SANCIONADO", 1.asInstanceOf[Double]).otherwise(0.asInstanceOf[Double]).as("sanctioned"))
       .join(partyFeatureVector, "id")
       .join(districtFeatureVector, "id")
       .join(congressmanFeatureVector, "id")
@@ -182,7 +182,7 @@ object HCDNClassification {
       .fit(train)
 
     LRModel.transform(test).select($"sanctioned", $"prediction")
-      .coalesce(1).write.format("csv")
+      .write.format("csv")
       .save(s"$outputSaveDir/LRresults.csv")
 
     // Decision tree classifier
@@ -192,7 +192,7 @@ object HCDNClassification {
       .fit(train)
 
     DTModel.transform(test).select($"sanctioned", $"prediction")
-      .coalesce(1).write.format("csv")
+      .write.format("csv")
       .save(s"$outputSaveDir/DTresults.csv")
 
     // Random forest classifier
@@ -203,7 +203,7 @@ object HCDNClassification {
       .fit(train)
 
     RFModel.transform(test).select($"sanctioned", $"prediction")
-      .coalesce(1).write.format("csv")
+      .write.format("csv")
       .save(s"$outputSaveDir/RFresults.csv")
 
     // Naive Bayes classifier
@@ -213,7 +213,7 @@ object HCDNClassification {
       .fit(train)
 
     NBModel.transform(test).select($"sanctioned", $"prediction")
-      .coalesce(1).write.format("csv")
+      .write.format("csv")
       .save(s"$outputSaveDir/NBresults.csv")
   }
 }
