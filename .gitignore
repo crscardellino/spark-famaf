@@ -109,3 +109,13 @@ spark-warehouse/
 # Project specific
 data/
 *.parquet/
+*.out
+*.err
+logs/
+
+# Data files
+*.parquet
+*.csv
+final/analytics/tables
+
+.ipynb_checkpoints/
